@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>e.html - Clear!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(135deg, #ffecd2, #fcb69f, #ffdde1, #c6ffdd, #fbd786, #f7797d);
+      background-size: 600% 600%;
+      animation: gradientBG 15s ease infinite;
+      color: #333;
+      text-align: center;
+    }
+
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-top: 3rem;
+      color: #fff;
+      text-shadow: 0 0 10px #ff9, 0 0 20px #f96, 0 0 30px #f33;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ff9, 0 0 20px #f96, 0 0 30px #f33; }
+      to   { text-shadow: 0 0 20px #fff, 0 0 30px #ff9, 0 0 40px #f96; }
+    }
+
+    .message {
+      font-size: 1.5rem;
+      margin: 2rem auto;
+      max-width: 600px;
+      background: rgba(255,255,255,0.8);
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 2rem;
+      background: #ff6f61;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: bold;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .btn:hover {
+      background: #e85c50;
+      transform: scale(1.1);
+    }
+
+    footer {
+      margin-top: 3rem;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <h1>✨ Congratulations! ✨</h1>
+  <div class="message">
+    <p>あなたは見事に謎を解き明かしました！</p>
+    <p>ここまでたどり着いたあなたに拍手を送ります👏</p>
+    <p>次のステージへ進む準備はできていますか？</p>
+  </div>
+  <a href="index.html" class="btn">トップへ戻る</a>
+  <footer>
+    &copy; 2025 Chapondice
+  </footer>
+</body>
+</html>
