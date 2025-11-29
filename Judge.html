@@ -5,23 +5,22 @@
   <title>page3.html</title>
 </head>
 <body>
-  <h1>位置情報によるページ分岐テスト</h1>
-  <p>現在地を取得して、東京駅から半径500m以内かどうかを判定します。</p>
+  <h1>位置情報によるページ分岐テスト（5地点）</h1>
+  <p>現在地を取得して、設定した5か所の地点のいずれかの半径範囲内か判定します。</p>
 
   <script>
-    // === 東京駅の座標 ===
-    // 後で別の場所に変更する場合はここを書き換えてください
-    const targetLat = 35.66090916; //  緯度
-    const targetLon = 139.87257063; //  経度
+    // === 判定対象の地点一覧（5か所） ===
+    // lat: 緯度, lon: 経度, url: 範囲内の時に遷移するページ, range: 半径(m)
+    const locations = [
+      { name: "PointA", lat: 35.681236, lon: 139.767125, url: "a.html", range: 300 }, // 東京駅例
+      { name: "PointB", lat: 35.689592, lon: 139.700413, url: "b.html", range: 300 }, // 新宿駅例
+      { name: "PointC", lat: 35.658034, lon: 139.701636, url: "c.html", range: 300 }, // 渋谷駅例
+      { name: "PointD", lat: 35.729503, lon: 139.7109,   url: "d.html", range: 300 }, // 池袋駅例
+      { name: "PointE", lat: 35.710063, lon: 139.8107,   url: "e.html", range: 300 }  // 押上駅例
+    ];
 
-    // === 判定範囲 (m) ===
-    // 後で変更可能
-    const range = 500; // 半径500m
-
-    // === リンク先URL ===
-    // 後で変更する場合はここを書き換えてください
-    const urlInside = "near.html"; // 範囲内のときのリンク先
-    const urlOutside = "far.html"; // 範囲外のときのリンク先
+    // 範囲外の遷移先
+    const urlOutside = "far.html";
 
     // 距離計算 (ハーヴァサイン公式)
     function getDistance(lat1, lon1, lat2, lon2) {
@@ -33,11 +32,10 @@
       const Δφ = toRad(lat2 - lat1);
       const Δλ = toRad(lon2 - lon1);
 
-      const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+      const a = Math.sin(Δφ/2) ** 2 +
                 Math.cos(φ1) * Math.cos(φ2) *
-                Math.sin(Δλ/2) * Math.sin(Δλ/2);
+                Math.sin(Δλ/2) ** 2;
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
       return R * c; // 距離 (m)
     }
 
@@ -46,17 +44,35 @@
       const lat = pos.coords.latitude;
       const lon = pos.coords.longitude;
 
-      const distance = getDistance(lat, lon, targetLat, targetLon);
-      console.log("現在地:", lat, lon, "距離:", distance, "m");
+      // 各地点との距離を計算し、範囲内の候補を抽出
+      const candidates = locations
+        .map(loc => {
+          const d = getDistance(lat, lon, loc.lat, loc.lon);
+          return { ...loc, distance: d };
+        })
+        .filter(loc => loc.distance <= loc.range);
 
-      if (distance <= range) {
-        window.location.href = urlInside;
+      // 複数範囲に入る場合は最も近い地点を優先
+      if (candidates.length > 0) {
+        candidates.sort((a, b) => a.distance - b.distance);
+        const target = candidates[0];
+        console.log(`範囲内: ${target.name}, 距離: ${Math.round(target.distance)}m → ${target.url}`);
+        window.location.href = target.url;
       } else {
+        console.log("全ての地点の範囲外 → far.html へ遷移");
         window.location.href = urlOutside;
       }
     }, err => {
       alert("位置情報が取得できませんでした: " + err.message);
+      // 位置情報取得に失敗した場合も far.html に遷移
+      window.location.href = urlOutside;
+    }, {
+      // オプション（必要に応じて調整）
+      enableHighAccuracy: true,  // 可能なら高精度
+      timeout: 10000,            // 最大待ち時間 10秒
+      maximumAge: 0              // キャッシュ位置情報を使わない
     });
   </script>
 </body>
 </html>
+
