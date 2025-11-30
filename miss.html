@@ -30,9 +30,41 @@
     }
     .popup {
       position: fixed;
+      top: 0; left: 0;<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Miss - Town Mazo</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #f5f9ff, #e6f0ff);
+      color: #333;
+    }
+    header {
+      background-color: #0066cc;
+      color: white;
+      text-align: center;
+      padding: 1.5rem 1rem;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    main {
+      padding: 2rem 1rem;
+      max-width: 800px;
+      margin: auto;
+      text-align: center;
+    }
+    .popup {
+      position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
+      background: #000000; /* 黒背景で完全に覆う */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -41,7 +73,7 @@
     .popup-content {
       background: white;
       border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
       padding: 2rem;
       text-align: center;
       max-width: 400px;
@@ -104,7 +136,7 @@
     &copy; 2025 Chapondice
   </footer>
 
-  <!-- ポップアップ -->
+  <!-- ポップアップ1 -->
   <div id="popup1" class="popup">
     <div class="popup-content">
       <h2>デバイスの現在地情報について</h2>
@@ -114,6 +146,7 @@
     </div>
   </div>
 
+  <!-- ポップアップ2 -->
   <div id="popup2" class="popup" style="display:none;">
     <div class="popup-content">
       <h2>本当に許可しませんか？</h2>
@@ -122,6 +155,7 @@
     </div>
   </div>
 
+  <!-- ポップアップ3 -->
   <div id="popup3" class="popup" style="display:none;">
     <div class="popup-content">
       <h2>本当に良いですね？</h2>
@@ -145,7 +179,7 @@
       e.preventDefault();
       const input = document.getElementById('password');
       const errorMessage = document.getElementById('errorMessage');
-      const correctPassword = "mazo2025"; // ←ここに正しいパスワードを設定
+      const correctPassword = "walking"; // ←ここに正しいパスワードを設定
 
       if (input.value === correctPassword) {
         location.href = "clear.html";
