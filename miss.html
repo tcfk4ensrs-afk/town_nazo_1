@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Miss - Town Mazo</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #f5f9ff, #e6f0ff);
+      color: #333;
+    }
+    header {
+      background-color: #0066cc;
+      color: white;
+      text-align: center;
+      padding: 1.5rem 1rem;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    main {
+      padding: 2rem 1rem;
+      max-width: 800px;
+      margin: auto;
+      text-align: center;
+    }
+    .popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .popup-content {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 2rem;
+      text-align: center;
+      max-width: 400px;
+    }
+    .popup-content h2 {
+      color: #0066cc;
+      margin-bottom: 1rem;
+    }
+    .btn {
+      display: inline-block;
+      margin: 0.5rem;
+      background: #0066cc;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s, transform 0.2s;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #004c99;
+      transform: scale(1.05);
+    }
+    .password-box {
+      margin-top: 2rem;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: inline-block;
+    }
+    input[type="password"] {
+      padding: 0.5rem;
+      width: 200px;
+      margin-bottom: 1rem;
+    }
+    .error {
+      color: red;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>位置情報エラー</h1>
+  </header>
+  <main>
+    <div class="password-box">
+      <h2>パスワード入力</h2>
+      <form id="passwordForm">
+        <input type="password" id="password" placeholder="パスワードを入力" required>
+        <br>
+        <button type="submit" class="btn">送信</button>
+      </form>
+      <div id="errorMessage" class="error"></div>
+    </div>
+  </main>
+  <footer>
+    &copy; 2025 Chapondice
+  </footer>
+
+  <!-- ポップアップ -->
+  <div id="popup1" class="popup">
+    <div class="popup-content">
+      <h2>デバイスの現在地情報について</h2>
+      <p>設定より使用を許可してください。</p>
+      <button class="btn" onclick="location.href='town_mazo.html'">許可するために設定に戻ります</button>
+      <button class="btn" onclick="showPopup(2)">許可しません</button>
+    </div>
+  </div>
+
+  <div id="popup2" class="popup" style="display:none;">
+    <div class="popup-content">
+      <h2>本当に許可しませんか？</h2>
+      <button class="btn" onclick="location.href='town_mazo.html'">前画面に戻る</button>
+      <button class="btn" onclick="showPopup(3)">許可しない</button>
+    </div>
+  </div>
+
+  <div id="popup3" class="popup" style="display:none;">
+    <div class="popup-content">
+      <h2>本当に良いですね？</h2>
+      <button class="btn" onclick="location.href='town_mazo.html'">前画面に戻る</button>
+      <button class="btn" onclick="closeAllPopups()">いい加減うるさい</button>
+    </div>
+  </div>
+
+  <script>
+    // ポップアップ切り替え
+    function showPopup(num) {
+      document.querySelectorAll('.popup').forEach(p => p.style.display = 'none');
+      document.getElementById('popup' + num).style.display = 'flex';
+    }
+    function closeAllPopups() {
+      document.querySelectorAll('.popup').forEach(p => p.style.display = 'none');
+    }
+
+    // パスワード判定
+    document.getElementById('passwordForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const input = document.getElementById('password');
+      const errorMessage = document.getElementById('errorMessage');
+      const correctPassword = "mazo2025"; // ←ここに正しいパスワードを設定
+
+      if (input.value === correctPassword) {
+        location.href = "clear.html";
+      } else {
+        errorMessage.textContent = "パスワードが違います";
+        input.value = "";
+      }
+    });
+  </script>
+</body>
+</html>
