@@ -15,12 +15,14 @@
       { name: "PointA", lat: 35.68700208, lon: 139.6964407, url: "a.html", range: 200 }, // あおい公園例
       { name: "PointB", lat: 35.69277062, lon: 139.69425201, url: "b.html", range: 100 }, // LOVE例
       { name: "PointC", lat: 35.69539334, lon: 139.70071614, url: "c.html", range: 200 }, // ミステリーサーカス例
-      { name: "PointD", lat: 35.68871439, lon: 139.70436931,   url: "d.html", range: 200 }, // 天龍寺例
-      { name: "PointE", lat: 35.69122251, lon: 139.69857574,   url: "e.html", range: 100 }  // 押上駅例
+      { name: "PointD", lat: 35.68871439, lon: 139.70436931, url: "d.html", range: 200 }, // 天龍寺例
+      { name: "PointE", lat: 35.69122251, lon: 139.69857574, url: "e.html", range: 100 }  // 押上駅例
     ];
 
     // 範囲外の遷移先
     const urlOutside = "far.html";
+    // 位置情報取得失敗時の遷移先
+    const urlMiss = "miss.html";
 
     // 距離計算 (ハーヴァサイン公式)
     function getDistance(lat1, lon1, lat2, lon2) {
@@ -64,8 +66,8 @@
       }
     }, err => {
       alert("位置情報が取得できませんでした: " + err.message);
-      // 位置情報取得に失敗した場合も far.html に遷移
-      window.location.href = urlOutside;
+      // 位置情報取得に失敗した場合は miss.html に遷移
+      window.location.href = urlMiss;
     }, {
       // オプション（必要に応じて調整）
       enableHighAccuracy: true,  // 可能なら高精度
